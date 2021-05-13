@@ -4,6 +4,7 @@
 
 static const char* message_str_arr[] = {
 	"E memory allocation error",
+	"W unknown comand"
 };
 
 void mess_fun(enum MESSAGES mess)
