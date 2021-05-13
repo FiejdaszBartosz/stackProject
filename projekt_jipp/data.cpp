@@ -119,7 +119,7 @@ void STUDENT_save(void* ptr_data, FILE* pf)
 	ptr = NULL;
 }
 
-void *STUDENT_load(FILE* pf)
+void* STUDENT_load(FILE* pf)
 {
 	STUDENT* ptr = (STUDENT*)malloc(sizeof(STUDENT));
 	if (!ptr)
