@@ -1,10 +1,12 @@
-#include "mess.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "mess.h"
+#include "stack.h"
 
 static const char* message_str_arr[] = {
 	"E memory allocation error",
-	"W unknown comand"
+	"W unknown comand",
+	"W push error"
 };
 
 void mess_fun(enum MESSAGES mess)
@@ -13,7 +15,7 @@ void mess_fun(enum MESSAGES mess)
 
 	if (message_str_arr[mess][0] == 'E')
 	{
-		//Free pamieci
+		STACK_free();
 		system("pause");
 	}
 
