@@ -5,6 +5,7 @@
 
 static const char* message_str_arr[] = {
 	"E memory allocation error",
+	"E file open error",
 	"W unknown comand",
 	"W push error"
 };
