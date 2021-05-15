@@ -104,32 +104,50 @@ int STUDENT_sarch_birth_year(void* ptr_current_data, void* ptr_search_data)
 	return 0;
 }
 
-void STUDENT_save(void* ptr_data, FILE* pf)
+bool STUDENT_save(void** ptr_data, FILE* pf)
 {
-	STUDENT* ptr = (STUDENT*)malloc(sizeof(STUDENT));
-	if (!ptr)
-		mess_fun(MESS_MEM_ALOC_ERROR);
+	if (pf && *ptr_data)
+	{
+		STUDENT* temp = (STUDENT*)(*ptr_data);
+		size_t retval;
 
-	ptr = (STUDENT*)ptr_data;
+		if ((retval = fwrite((const void*)(temp), sizeof(STUDENT), 1, pf)) != 1)
+			return false;
 
-	fwrite(ptr, sizeof(STUDENT), 1, pf);
-	fwrite(ptr->surname, sizeof(char), ptr->size + 1, pf);
+		if ((retval = fwrite((const void*)(temp->surname), sizeof(char), temp->size + 1, pf)) != 1)
+			return false;
 
-	free(ptr);
-	ptr = NULL;
+		return true;
+	}
+	else
+		return false;
 }
 
-void* STUDENT_load(FILE* pf)
+bool STUDENT_load(void** ptr_data, FILE* pf)
 {
-	STUDENT* ptr = (STUDENT*)malloc(sizeof(STUDENT));
-	if (!ptr)
-		mess_fun(MESS_MEM_ALOC_ERROR);
+	if (pf)
+	{
+		STUDENT* temp = (STUDENT*)(*ptr_data);
+		size_t retval;
 
-	fread((void*)ptr, sizeof(STUDENT), 1, pf);
+		if (!temp)
+		{
+			if ((temp = (STUDENT*)malloc(sizeof(STUDENT))) == NULL)
+				return false;
 
-	ptr->surname = (char*)malloc((ptr->size + 1) * sizeof(char));
-	fread(ptr->surname, sizeof(char), ptr->size + 1, pf);
+			if ((temp->surname = (char*)malloc((temp->size + 1) * sizeof(char))) == NULL);
+				return false;
+		}
 
-	return (void*)ptr;
+		*ptr_data = (void*)temp;
+
+		if ((retval = fread((void*)(temp), sizeof(STUDENT), 1, pf)) != 1)
+			return false;
+
+		if ((retval = fread(temp->surname, sizeof(char), temp->size + 1, pf)) != 1)
+			return false;
+
+		return true;
+	}
 }
 

@@ -6,6 +6,7 @@
 #include "interface.h"
 
 static STACK* top = NULL;
+const char filename[] = "data_file.bin";
 free_data ptr_free_data;
 print_data ptr_print_data;
 
@@ -104,16 +105,66 @@ void* STACK_serch(void* ptr_serch_data, compare_data ptr_compare_type, int first
 	return NULL;
 }
 
-void STACK_save(save_data parameters)
+bool STACK_save(IO_object object)
 {
-	char filename[] = "data_file.bin";
+	STACK* temp1 = top, * temp2, * current = top;
+	size_t i, no_items = 0, retval;
 
 	FILE* pf = fopen(filename, "wb");
 	if (!pf)
 		mess_fun(MESS_FILE_OPEN_ERROR);
 
-	
+	while (temp1)
+	{
+		temp2 = temp1;
+		temp1 = temp1->next;
+		++no_items;
+	}
+
+	if ((retval = fwrite((const void*)&no_items, sizeof(no_items), 1, pf)) != 1)
+		return false;
+
+	for (i = 0; i < no_items; ++i)
+	{
+		(*object)(current->ptr_element_data, pf);
+
+		current = current->next;
+	}
+
+	fclose(pf);
+	pf = NULL;
+
+	return true;
 }
 
+bool STACK_load(IO_object* object)
+{
+	STACK* tmp;
+	size_t i, no_items = 0, retval;
+
+	//memset((void*)&tmp, 0, sizeof(tmp));
+
+	FILE* pf = fopen(filename, "rb");
+	if (!pf)
+		return false;
+
+	if (top != NULL)
+		STACK_free();
+
+	if ((retval = fread((void*)&no_items, sizeof(no_items), 1, pf)) != 1)
+		return false;
+	
+	for(i = 0; i < no_items; ++i)
+	{
+		(*object)(tmp->ptr_element_data, pf);
+		STACK_push(tmp);
+	}
+
+	fclose(pf);
+	pf = NULL;
+
+	tmp = NULL;
+	return true;
+}
 
 

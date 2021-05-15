@@ -22,5 +22,5 @@ void STUDENT_print(void* ptr);
 int STUDENT_search_surname(void* ptr_current_data, void* ptr_search_data);
 int STUDENT_search_course(void* ptr_current_data, void* ptr_search_data);
 int STUDENT_sarch_birth_year(void* ptr_current_data, void* ptr_search_data);
-void STUDENT_save(void* ptr_data, FILE* pf);
-void* STUDENT_load(FILE* pf);
+bool STUDENT_save(void** ptr_data, FILE* pf);
+bool STUDENT_load(void** ptr_data, FILE* pf);
