@@ -61,7 +61,7 @@ STACK STACK_pop()
 {
 	STACK current;
 
-	if (top = NULL)
+	if (top == NULL)
 	{
 		current.ptr_element_data = NULL;
 		current.next = NULL;
@@ -126,7 +126,8 @@ bool STACK_save(IO_object object)
 
 	for (i = 0; i < no_items; ++i)
 	{
-		(*object)(current->ptr_element_data, pf);
+		if (!(*object)(current->ptr_element_data, pf))
+			return false;
 
 		current = current->next;
 	}
@@ -142,7 +143,7 @@ bool STACK_load(IO_object* object)
 	STACK* tmp;
 	size_t i, no_items = 0, retval;
 
-	//memset((void*)&tmp, 0, sizeof(tmp));
+	memset((void*)&tmp, 0, sizeof(tmp));
 
 	FILE* pf = fopen(filename, "rb");
 	if (!pf)
@@ -156,13 +157,19 @@ bool STACK_load(IO_object* object)
 	
 	for(i = 0; i < no_items; ++i)
 	{
-		(*object)(tmp->ptr_element_data, pf);
-		STACK_push(tmp);
+		if (!(*object)(tmp->ptr_element_data, pf))
+			return false;
+
+		if(!STACK_push(tmp))
+			return false;
+
+		tmp->ptr_element_data = NULL;
 	}
 
 	fclose(pf);
 	pf = NULL;
 
+	free(tmp);
 	tmp = NULL;
 	return true;
 }

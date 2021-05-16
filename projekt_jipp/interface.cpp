@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "mess.h"
+#include "data.h"
+#include "stack.h"
 #include "interface.h"
 
 static const char* interface_arr[] = {
@@ -25,12 +27,30 @@ void menu()
 
 void push()
 {
-	printf("PUSH\n");
+	char surname[512];
+	int year;
+	
+	DEGREE_COURSE course;
+
+	printf("Podaj nastepujace dane studenta:\n");
+	printf("Nazisko: ");
+	scanf("%s", surname);
+	printf("\nKierunek:\n0 - INFORMATYKA\n1 - MATEMATYKA\n2 - FIZYKA\n ");
+	scanf("%d", &course);
+	printf("\nRok urodzenia: ");
+	scanf("%d", &year);
+
+	void* ptr_data = STUDENT_push(surname, year, course);
+	if (!STACK_push(ptr_data))
+		mess_fun(MESS_PUSH_ERROR);
 }
 
 void pop()
 {
-	printf("POP\n");
+	STACK temp = STACK_pop();
+
+	STUDENT_print(temp.ptr_element_data);
+	STUDENT_free(temp.ptr_element_data);
 }
 
 void find()

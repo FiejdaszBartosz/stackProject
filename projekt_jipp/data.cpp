@@ -67,7 +67,7 @@ void STUDENT_print(void* ptr)
 	{
 		printf("nazwisko      : %s\n", ptr_temp->surname);
 		printf("kierunek      : %s\n", STUDENT_get_course(ptr_temp->course));
-		printf("rok urodzenia : %s\n", ptr_temp->birth_year);
+		printf("rok urodzenia : %d\n", ptr_temp->birth_year);
 	}
 }
 
@@ -135,7 +135,7 @@ bool STUDENT_load(void** ptr_data, FILE* pf)
 			if ((temp = (STUDENT*)malloc(sizeof(STUDENT))) == NULL)
 				return false;
 
-			if ((temp->surname = (char*)malloc((temp->size + 1) * sizeof(char))) == NULL);
+			if ((temp->surname = (char*)malloc((temp->size + 1) * sizeof(char))) == NULL)
 				return false;
 		}
 
