@@ -93,7 +93,7 @@ int STUDENT_search_course(void* ptr_current_data, void* ptr_search_data)
 	return 0;
 }
 
-int STUDENT_sarch_birth_year(void* ptr_current_data, void* ptr_search_data)
+int STUDENT_search_birth_year(void* ptr_current_data, void* ptr_search_data)
 {
 	STUDENT* ptr_current = (STUDENT*)ptr_current_data;
 	STUDENT* ptr_serch = (STUDENT*)ptr_search_data;
@@ -104,11 +104,11 @@ int STUDENT_sarch_birth_year(void* ptr_current_data, void* ptr_search_data)
 	return 0;
 }
 
-bool STUDENT_save(void** ptr_data, FILE* pf)
+bool STUDENT_save(void* ptr_data, FILE* pf)
 {
-	if (pf && *ptr_data)
+	if (pf && ptr_data)
 	{
-		STUDENT* temp = (STUDENT*)(*ptr_data);
+		STUDENT* temp = (STUDENT*)(ptr_data);
 		size_t retval;
 
 		if ((retval = fwrite((const void*)(temp), sizeof(STUDENT), 1, pf)) != 1)
@@ -123,11 +123,11 @@ bool STUDENT_save(void** ptr_data, FILE* pf)
 		return false;
 }
 
-bool STUDENT_load(void** ptr_data, FILE* pf)
+bool STUDENT_load(void* ptr_data, FILE* pf)
 {
 	if (pf)
 	{
-		STUDENT* temp = (STUDENT*)(*ptr_data);
+		STUDENT* temp = (STUDENT*)(ptr_data);
 		size_t retval;
 
 		if (!temp)
@@ -139,7 +139,7 @@ bool STUDENT_load(void** ptr_data, FILE* pf)
 				return false;
 		}
 
-		*ptr_data = (void*)temp;
+		ptr_data = (void*)temp;
 
 		if ((retval = fread((void*)(temp), sizeof(STUDENT), 1, pf)) != 1)
 			return false;
