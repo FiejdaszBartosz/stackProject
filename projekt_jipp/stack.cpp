@@ -140,7 +140,10 @@ bool STACK_save(IO_object object)
 
 bool STACK_load(IO_object* object)
 {
-	STACK* tmp;
+	STACK tmp;
+
+	//tmp->ptr_element_data = NULL;
+
 	size_t i, no_items = 0, retval;
 
 	memset((void*)&tmp, 0, sizeof(tmp));
@@ -157,20 +160,20 @@ bool STACK_load(IO_object* object)
 	
 	for(i = 0; i < no_items; ++i)
 	{
-		if (!(*object)(tmp->ptr_element_data, pf))
+		if (!(*object)(&tmp.ptr_element_data, pf))
 			return false;
 
-		if(!STACK_push(tmp))
+		if(!STACK_push(tmp.ptr_element_data))
 			return false;
 
-		tmp->ptr_element_data = NULL;
+		tmp.ptr_element_data = NULL;
 	}
 
 	fclose(pf);
 	pf = NULL;
 
-	free(tmp);
-	tmp = NULL;
+	//free(tmp);
+	//tmp = NULL;
 	return true;
 }
 

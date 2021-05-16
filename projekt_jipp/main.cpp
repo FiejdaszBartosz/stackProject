@@ -2,10 +2,13 @@
 #include <stdio.h>
 #include <string.h>
 #include "mess.h"
+#include "stack.h"
+#include "data.h"
 #include "interface.h"
 
 int main()
 {
+	STACK_init(STUDENT_free, STUDENT_print);
 	size_t choice = 0;
 
 	while (choice >= INTREFACE_PUSH && choice <= INTERFACE_END)

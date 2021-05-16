@@ -134,20 +134,23 @@ bool STUDENT_load(void* ptr_data, FILE* pf)
 		{
 			if ((temp = (STUDENT*)malloc(sizeof(STUDENT))) == NULL)
 				return false;
-
-			if ((temp->surname = (char*)malloc((temp->size + 1) * sizeof(char))) == NULL)
-				return false;
 		}
 
 		ptr_data = (void*)temp;
 
-		if ((retval = fread((void*)(temp), sizeof(STUDENT), 1, pf)) != 1)
+		if ((retval = fread((void*)temp, sizeof(STUDENT), 1, pf)) != 1)
 			return false;
 
-		if ((retval = fread(temp->surname, sizeof(char), temp->size + 1, pf)) != 1)
+		
+
+		if ((temp->surname = (char*)malloc((temp->size + 1) * sizeof(char))) == NULL)
+			return false;
+		if ((retval = fread((void*)temp->surname, sizeof(char), temp->size + 1, pf)) != temp->size + 1)
 			return false;
 
 		return true;
 	}
+	else
+		return false;
 }
 
