@@ -184,5 +184,5 @@ void load()
 
 void clear()
 {
-	STACK_free;
+	STACK_free();
 }

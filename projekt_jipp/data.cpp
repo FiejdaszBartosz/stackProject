@@ -114,7 +114,7 @@ bool STUDENT_save(void* ptr_data, FILE* pf)
 		if ((retval = fwrite((const void*)(temp), sizeof(STUDENT), 1, pf)) != 1)
 			return false;
 
-		if ((retval = fwrite((const void*)(temp->surname), sizeof(char), temp->size + 1, pf)) != 1)
+		if ((retval = fwrite((const void*)(temp->surname), sizeof(char), temp->size + 1, pf)) != temp->size + 1)
 			return false;
 
 		return true;
