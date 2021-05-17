@@ -123,20 +123,17 @@ bool STUDENT_save(void* ptr_data, FILE* pf)
 		return false;
 }
 
-bool STUDENT_load(void* ptr_data, FILE* pf)
+bool STUDENT_load(void** ptr_data, FILE* pf)
 {
 	if (pf)
 	{
-		STUDENT* temp = (STUDENT*)(ptr_data);
-		size_t retval;
-
+		STUDENT* temp = (STUDENT*)malloc(sizeof(STUDENT));
 		if (!temp)
 		{
-			if ((temp = (STUDENT*)malloc(sizeof(STUDENT))) == NULL)
-				return false;
+			mess_fun(MESS_MEM_ALOC_ERROR);
 		}
+		size_t retval;
 
-		ptr_data = (void*)temp;
 
 		if ((retval = fread((void*)temp, sizeof(STUDENT), 1, pf)) != 1)
 			return false;
@@ -147,6 +144,8 @@ bool STUDENT_load(void* ptr_data, FILE* pf)
 			return false;
 		if ((retval = fread((void*)temp->surname, sizeof(char), temp->size + 1, pf)) != temp->size + 1)
 			return false;
+
+		*ptr_data = STUDENT_push(temp->surname, temp->birth_year, temp->course);
 
 		return true;
 	}

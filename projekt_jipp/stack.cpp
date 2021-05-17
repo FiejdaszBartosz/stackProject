@@ -138,15 +138,15 @@ bool STACK_save(IO_object object)
 	return true;
 }
 
-bool STACK_load(IO_object* object)
+bool STACK_load(IO_object_load* object)
 {
-	STACK tmp;
 
-	//tmp->ptr_element_data = NULL;
+	void* ptrdata;
+
 
 	size_t i, no_items = 0, retval;
 
-	memset((void*)&tmp, 0, sizeof(tmp));
+
 
 	FILE* pf = fopen(filename, "rb");
 	if (!pf)
@@ -160,20 +160,19 @@ bool STACK_load(IO_object* object)
 	
 	for(i = 0; i < no_items; ++i)
 	{
-		if (!(*object)(&tmp.ptr_element_data, pf))
+		if (!(*object)(&ptrdata, pf))
 			return false;
 
-		if(!STACK_push(tmp.ptr_element_data))
+		if(!STACK_push(ptrdata))
 			return false;
 
-		tmp.ptr_element_data = NULL;
+
+		ptrdata = NULL;
 	}
 
 	fclose(pf);
 	pf = NULL;
 
-	//free(tmp);
-	//tmp = NULL;
 	return true;
 }
 

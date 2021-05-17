@@ -9,7 +9,7 @@
 int main()
 {
 	STACK_init(STUDENT_free, STUDENT_print);
-	size_t choice = 0;
+	int choice = 0;
 
 	while (choice >= INTREFACE_PUSH && choice <= INTERFACE_END)
 	{
