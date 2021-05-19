@@ -172,13 +172,13 @@ void find()
 
 void save()
 {
-	if (!STACK_save(STUDENT_save))
+	if (!STACK_save_q(STUDENT_save))
 		mess_fun(MESS_FILE_OPEN_ERROR);
 }
 
 void load()
 {
-	if(!STACK_load(*STUDENT_load))
+	if(!STACK_load_q(*STUDENT_load))
 		mess_fun(MESS_FILE_OPEN_ERROR);
 }
 

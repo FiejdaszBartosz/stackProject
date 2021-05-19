@@ -153,3 +153,55 @@ bool STUDENT_load(void** ptr_data, FILE* pf)
 		return false;
 }
 
+bool STUDENT_save_q(void* ptr_data, FILE* pf)
+{
+	if (pf && ptr_data)
+	{
+		STUDENT* temp = (STUDENT*)(ptr_data);
+		
+
+		if (!fwrite(temp, sizeof(temp->birth_year) + sizeof(temp->course) + sizeof(temp->size), 1, pf))
+			return false;
+
+		if (!fwrite(temp->surname, temp->size * sizeof(temp->surname[0]), 1, pf))
+			return false;
+
+		return true;
+	}
+	else
+		return false;
+}
+
+bool STUDENT_load_q(void** ptr_data, FILE* pf)
+{
+	if (pf)
+	{
+		STUDENT* temp = (STUDENT*)malloc(sizeof(STUDENT));
+		if (!temp)
+		{
+			mess_fun(MESS_MEM_ALOC_ERROR);
+		}
+		memset(temp, 0, sizeof(STUDENT));
+		
+		size_t retval;
+
+
+		if (!fread(temp, sizeof(temp->birth_year) + sizeof(temp->course) + sizeof(temp->size), 1, pf))
+			return false;
+
+		if ((temp->surname = (char*)malloc((temp->size + 1) * sizeof(char))) == NULL)
+		{
+			mess_fun(MESS_MEM_ALOC_ERROR);
+			return false;
+		}
+			
+		if (!fread(temp->surname, temp->size * sizeof(char), 1, pf))
+			return false;
+
+		*ptr_data = STUDENT_push(temp->surname, temp->birth_year, temp->course);
+
+		return true;
+	}
+	else
+		return false;
+}

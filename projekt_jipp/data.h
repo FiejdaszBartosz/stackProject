@@ -24,3 +24,6 @@ int STUDENT_search_course(void* ptr_current_data, void* ptr_search_data);
 int STUDENT_search_birth_year(void* ptr_current_data, void* ptr_search_data);
 bool STUDENT_save(void* ptr_data, FILE* pf);
 bool STUDENT_load(void** ptr_data, FILE* pf);
+
+bool STUDENT_save_q(void* ptr_data, FILE* pf);
+bool STUDENT_load_q(void** ptr_data, FILE* pf);
