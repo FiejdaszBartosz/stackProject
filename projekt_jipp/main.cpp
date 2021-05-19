@@ -22,6 +22,8 @@ int main()
 			break;
 		case INTERFACE_POP: pop();
 			break;
+		case INTERFACE_SHOW: show();
+			break;
 		case INTERFACE_FIND: find();
 			break;
 		case INTERFACE_SAVE: save();
@@ -36,6 +38,7 @@ int main()
 			mess_fun(MESS_CHOICE_WARN);
 			break;
 		}
+		printf("\n");
 	}
 
 	return 0;

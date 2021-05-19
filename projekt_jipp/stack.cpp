@@ -81,6 +81,27 @@ STACK STACK_pop()
 	return current;
 }
 
+void STACK_show()
+{
+	STACK* temp = top;
+	
+	if (temp != NULL)
+	{
+		printf("%-14s", " ");
+		printf("%s", "STACK");
+		printf("\n\n");
+		while (temp != NULL) {
+			ptr_print_data(temp->ptr_element_data);
+			temp = temp->next;
+		}
+		printf("\n\n");
+	}
+	else
+	{
+		printf("Stos jest pusty\n");
+	}
+}
+
 void* STACK_serch(void* ptr_serch_data, compare_data ptr_compare_type, int first_entry)
 {
 	static STACK* ptr_serch_item;
@@ -106,77 +127,6 @@ void* STACK_serch(void* ptr_serch_data, compare_data ptr_compare_type, int first
 }
 
 bool STACK_save(IO_object object)
-{
-	STACK* temp1 = top, * temp2, * current = top;
-	size_t i, no_items = 0, retval;
-
-	FILE* pf = fopen(filename, "wb");
-	if (!pf)
-		mess_fun(MESS_FILE_OPEN_ERROR);
-
-	while (temp1)
-	{
-		temp2 = temp1;
-		temp1 = temp1->next;
-		++no_items;
-	}
-
-	if ((retval = fwrite((const void*)&no_items, sizeof(no_items), 1, pf)) != 1)
-		return false;
-
-	for (i = 0; i < no_items; ++i)
-	{
-		if (!(*object)(current->ptr_element_data, pf))
-			return false;
-
-		current = current->next;
-	}
-
-	fclose(pf);
-	pf = NULL;
-
-	return true;
-}
-
-bool STACK_load(IO_object_load* object)
-{
-
-	void* ptrdata;
-
-
-	size_t i, no_items = 0, retval;
-
-
-
-	FILE* pf = fopen(filename, "rb");
-	if (!pf)
-		return false;
-
-	if (top != NULL)
-		STACK_free();
-
-	if ((retval = fread((void*)&no_items, sizeof(no_items), 1, pf)) != 1)
-		return false;
-	
-	for(i = 0; i < no_items; ++i)
-	{
-		if (!(*object)(&ptrdata, pf))
-			return false;
-
-		if(!STACK_push(ptrdata))
-			return false;
-
-
-		ptrdata = NULL;
-	}
-
-	fclose(pf);
-	pf = NULL;
-
-	return true;
-}
-
-bool STACK_save_q(IO_object object)
 {
 	STACK* temp = top;
 	if (temp == NULL)
@@ -258,7 +208,7 @@ bool STACK_save_q(IO_object object)
 	return true;	
 }
 
-bool STACK_load_q(IO_object_load* object) 
+bool STACK_load(IO_object_load* object) 
 {
 	void* ptrdata;
 	__int64* file_descriptor = NULL;
