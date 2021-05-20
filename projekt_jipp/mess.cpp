@@ -8,6 +8,7 @@ static const char* message_str_arr[] = {
 	(char*)"E file open error",
 	(char*)"W unknown comand",
 	(char*)"W push error",
+	(char*)"W stack underflow",
 	(char *)"E fatal error"
 };
 

@@ -7,20 +7,20 @@
 #include "interface.h"
 
 static const char* interface_arr[] = {
-	"PUSH   -  0",
-	"POP    -  1",
-	"SHOW   -  2",
-	"FIND   -  3",
-	"SAVE   -  4",
-	"LOAD   -  5",
-	"CLEAR  -  6",
-	"END    -  7"
+	(char*)"PUSH   -  0",
+	(char*)"POP    -  1",
+	(char*)"SHOW   -  2",
+	(char*)"FIND   -  3",
+	(char*)"SAVE   -  4",
+	(char*)"LOAD   -  5",
+	(char*)"CLEAR  -  6",
+	(char*)"END    -  7"
 };
 
 static const char* degree[] = {
-	"0 - INFORMATYKA",
-	"1 - MATEMATYKA",
-	"2 - FIZYKA",
+	(char*)"0 - INFORMATYKA",
+	(char*)"1 - MATEMATYKA",
+	(char*)"2 - FIZYKA",
 };
 
 void menu()
@@ -89,7 +89,6 @@ void find()
 		break;
 	case 2: find_birth_year();
 		break;
-
 	default: mess_fun(MESS_CHOICE_WARN);
 		break;
 	}

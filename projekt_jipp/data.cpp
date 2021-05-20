@@ -4,10 +4,10 @@
 #include "data.h"
 #include "mess.h"
 
-const char* courses[] = {
-	"informatyka",
-	"matematyka",
-	"fizyka"
+static const char* courses[] = {
+	(char*)"informatyka",
+	(char*)"matematyka",
+	(char*)"fizyka"
 };
 
 void* STUDENT_init(char* init_surname, int init_year, DEGREE_COURSE init_course)

@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 enum DEGREE_COURSE {
 	INFORMATYKA,
 	MATEMATYKA,

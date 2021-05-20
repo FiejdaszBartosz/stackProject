@@ -63,6 +63,7 @@ STACK STACK_pop()
 
 	if (top == NULL)
 	{
+		mess_fun(MESS_STACK_UNDERFLOW);
 		current.ptr_element_data = NULL;
 		current.next = NULL;
 	}
@@ -98,7 +99,7 @@ void STACK_show()
 	}
 	else
 	{
-		printf("Stos jest pusty\n");
+		mess_fun(MESS_STACK_UNDERFLOW);
 	}
 }
 
@@ -126,12 +127,12 @@ void* STACK_serch(void* ptr_serch_data, compare_data ptr_compare_type, int first
 	return NULL;
 }
 
-bool STACK_save(IO_object object)
+bool STACK_save(IO_object_save object)
 {
 	STACK* temp = top;
 	if (temp == NULL)
 	{
-		//dopisac mess
+		mess_fun(MESS_STACK_UNDERFLOW);
 		return false;
 	}
 
